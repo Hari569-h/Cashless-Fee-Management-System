@@ -293,10 +293,34 @@ if (document.getElementById('student-search-form')) {
     });
 }
 
+// UI helper functions
+function showError(element, message) {
+    element.textContent = message;
+    element.style.color = 'red';
+    element.classList.remove('hidden');
+}
+
+function showSuccess(element, message) {
+    element.textContent = message;
+    element.style.color = 'green';
+    element.classList.remove('hidden');
+}
+
 // Payment functionality with multiple payment methods
 function setupPayment() {
     const payButton = document.getElementById('pay-fee-button');
     if (!payButton) return;
+
+    // Add input event listener to clear error message when payment amount is changed
+    const paymentAmountInput = document.getElementById('payment-amount');
+    if (paymentAmountInput) {
+        paymentAmountInput.addEventListener('input', () => {
+            const messageElement = document.getElementById('payment-message');
+            if (messageElement) {
+                messageElement.textContent = ''; // Clear the error message
+            }
+        });
+    }
 
     payButton.addEventListener('click', async () => {
         const studentId = document.getElementById('s-studentId').textContent;
@@ -739,19 +763,6 @@ function generateSimpleReceipt(data) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-}
-
-// UI helper functions
-function showError(element, message) {
-    element.textContent = message;
-    element.style.color = 'red';
-    element.classList.remove('hidden');
-}
-
-function showSuccess(element, message) {
-    element.textContent = message;
-    element.style.color = 'green';
-    element.classList.remove('hidden');
 }
 
 // Logout functionality
