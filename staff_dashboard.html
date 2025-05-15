@@ -1468,6 +1468,17 @@
             const payButton = document.getElementById('pay-fee-button');
             if (!payButton) return;
 
+            // Add input event listener to clear error message when payment amount is changed
+            const paymentAmountInput = document.getElementById('payment-amount');
+            if (paymentAmountInput) {
+                paymentAmountInput.addEventListener('input', () => {
+                    const messageElement = document.getElementById('payment-message');
+                    if (messageElement) {
+                        messageElement.textContent = ''; // Clear the error message
+                    }
+                });
+            }
+            
             payButton.addEventListener('click', async () => {
                 const paymentAmount = parseFloat(document.getElementById('payment-amount').value);
                 const studentId = document.getElementById('s-studentId').textContent;
